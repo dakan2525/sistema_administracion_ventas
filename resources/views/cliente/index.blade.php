@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('title', 'Categorías')
+@section('title', 'Clientes')
 
 
 @push('css')
@@ -35,81 +35,95 @@
     @endif
 
     <div class="container-fluid px-4">
-        <h1 class="mt-4 text-center">Marcas</h1>
+        <h1 class="mt-4 text-center">Clientes</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active"><a href="{{ route('panel') }}">Inicio</a></li>
-            <li class="breadcrumb-item active">Marcas</li>
+            <li class="breadcrumb-item active">Clientes</li>
         </ol>
 
         <div class="mb-4">
-            <a href="{{ route('marca.create') }}" class="btn btn-primary">Añadir nuevo registro</a>
+            <a href="{{ route('cliente.create') }}" class="btn btn-primary">Añadir nuevo registro</a>
         </div>
 
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                Tabla de marcasmarcas
+                Tabla clientes
             </div>
             <div class="card-body">
                 <table id="datatablesSimple" class="table table-striped">
                     <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>Descripción</th>
+                            <th>Direccion</th>
+                            <th>Tipo de documento</th>
+                            <th>Numero de documento</th>
+                            <th>Tipo de cliente</th>
                             <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-
-                        @forelse ($marcas as $marca)
+                        @foreach ($clientes as $cliente)
                             <tr>
-                                <td class="fw-semibold">{{ $marca->caracteristica->nombre }}</td>
-                                <td>{{ $marca->caracteristica->descripcion }}</td>
+                                <td>
+                                    {{ $cliente->persona->razon_social }}
+                                </td>
+                                <td>
+                                    {{ $cliente->persona->direccion }}
+                                </td>
+                                <td>
+                                    {{ $cliente->persona->documento->tipo_documento }}
+                                </td>
+                                <td>
+                                    {{ $cliente->persona->numero_documento }}
+                                </td>
+                                <td>
+                                    {{ $cliente->persona->tipo_persona }}
+                                </td>
                                 <td class="fw-semibold">
-                                    @if ($marca->caracteristica->estado > 0)
+                                    @if ($cliente->persona->estado == 1)
                                         <span>Activo</span>
                                     @else
                                         <span>Eliminado</span>
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary" href="{{ route('marca.edit', $marca) }}">
+                                    <a class="btn btn-primary" href="{{ route('cliente.edit', $cliente) }}">
                                         Editar</a>
-                                    @if ($marca->caracteristica->estado == 1)
+                                    @if ($cliente->persona->estado == 1)
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#confirmModal-{{ $marca->id }}">Eliminar</button>
+                                            data-bs-target="#confirmModal-{{ $cliente->id }}">Eliminar</button>
                                     @else
                                         <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                            data-bs-target="#confirmModal-{{ $marca->id }}">Restaurar</button>
+                                            data-bs-target="#confirmModal-{{ $cliente->id }}">Restaurar</button>
                                     @endif
                                 </td>
                             </tr>
-
                             <!-- Modal -->
-                            <div class="modal fade" id="confirmModal-{{ $marca->id }}" tabindex="-1"
+                            <div class="modal fade" id="confirmModal-{{ $cliente->id }}" tabindex="-1"
                                 aria-labelledby="confirmModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h1 class="modal-title fs-5" id="confirmModalLabel">
-                                                {{ $marca->caracteristica->estado == 1 ? 'Eliminar' : 'Restaurar' }}
+                                                {{ $cliente->persona->estado == 1 ? 'Eliminar' : 'Restaurar' }}
                                             </h1>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            {{ $marca->caracteristica->estado == 1 ? '¿Seguro que desea eliminar esta marca?' : '¿Seguro que desea restaurar esta marca?' }}
+                                            {{ $cliente->persona->estado == 1 ? '¿Seguro que desea eliminar este cliente?' : '¿Seguro que desea restaurar este cliente?' }}
                                         </div>
                                         <div class="modal-footer">
-                                            <form class="m-1" action="{{ route('marca.destroy', $marca->id) }}"
+                                            <form class="m-1" action="{{ route('cliente.destroy', $cliente->id) }}"
                                                 method="POST">
                                                 @method('DELETE')
                                                 @csrf
                                                 <button type="reset" class="btn btn-primary"
                                                     data-bs-dismiss="modal">Cancelar</button>
 
-                                                @if ($marca->caracteristica->estado == 1)
+                                                @if ($cliente->persona->estado == 1)
                                                     <button type="submit" class="btn btn-danger">Eliminar</button>
                                                 @else
                                                     <button type="submit" class="btn btn-success">Restaurar</button>
@@ -119,11 +133,7 @@
                                     </div>
                                 </div>
                             </div>
-                        @empty
-                            <tr>
-                                <h3 class="text-danger">No existen marcas</h3>
-                            </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>

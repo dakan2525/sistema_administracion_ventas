@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\CategoriaController;
+use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PresentacioneController;
+use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,11 +25,15 @@ Route::get('/', function () {
 
 Route::view('/panel', 'panel.index')->name('panel');
 
-Route::resource('categoria', CategoriaController::class);
+Route::resources([
+    'categoria' => CategoriaController::class,
+    'marca' => MarcaController::class,
+    'presentacion' => PresentacioneController::class,
+    'producto' => ProductoController::class,
+    'cliente' => ClienteController::class,
+    'proveedor' => ProveedorController::class,
 
-Route::resource('marca', MarcaController::class);
-
-Route::resource('presentacion', PresentacioneController::class);
+]);
 
 
 Route::get('/login', function () {

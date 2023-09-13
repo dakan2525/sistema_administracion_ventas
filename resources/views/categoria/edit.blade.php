@@ -44,7 +44,7 @@
 
                     <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary">Actualizar</button>
-                        <button type="reset" class="btn btn-primary">Reiniciar</button>
+                        <button type="reset" class="btn btn-secondary">Reiniciar</button>
                     </div>
 
                 </div>

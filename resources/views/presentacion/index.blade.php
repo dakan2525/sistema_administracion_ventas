@@ -48,7 +48,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                Tabla de Presentacionespresentacion
+                Tabla de Presentacionespresentaciones
             </div>
             <div class="card-body">
                 <table id="datatablesSimple" class="table table-striped">
@@ -64,13 +64,13 @@
 
                         @forelse ($presentaciones as $presentacion)
                             <tr>
-                                <td>{{ $presentacion->caracteristica->nombre }}</td>
+                                <td class="fw-semibold">{{ $presentacion->caracteristica->nombre }}</td>
                                 <td>{{ $presentacion->caracteristica->descripcion }}</td>
-                                <td>
+                                <td class="fw-semibold">
                                     @if ($presentacion->caracteristica->estado > 0)
-                                        <span class="fw-bolder rounded bg-success text-white p-1">Activo</span>
+                                        <span>Activo</span>
                                     @else
-                                        <span class="fw-bolder rounded bg-danger text-white p-1">Eliminado</span>
+                                        <span>Eliminado</span>
                                     @endif
                                 </td>
                                 <td>
@@ -109,7 +109,12 @@
                                                 @csrf
                                                 <button type="reset" class="btn btn-primary"
                                                     data-bs-dismiss="modal">Cancelar</button>
-                                                <button type="submit" class="btn btn-danger">Eliminar</button>
+
+                                                @if ($presentacion->caracteristica->estado == 1)
+                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                @else
+                                                    <button type="submit" class="btn btn-success">Restaurar</button>
+                                                @endif
                                             </form>
                                         </div>
                                     </div>

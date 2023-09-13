@@ -65,12 +65,24 @@
                     Categorias
                 </a>
                 <a class="nav-link" href="{{ route('marca.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-star"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-shop"></i></div>
                     Marcas
                 </a>
                 <a class="nav-link" href="{{ route('presentacion.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-boxes-packing"></i></div>
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-star"></i></div>
                     Presentaciones
+                </a>
+                <a class="nav-link" href="{{ route('producto.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-boxes-packing"></i></div>
+                    Productos
+                </a>
+                <a class="nav-link" href="{{ route('cliente.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
+                    Clientes
+                </a>
+                <a class="nav-link" href="{{ route('proveedor.index') }}">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
+                    Proveedores
                 </a>
 
             </div>
