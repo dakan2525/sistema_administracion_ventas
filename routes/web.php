@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\CompraController;
 use App\Http\Controllers\MarcaController;
 use App\Http\Controllers\PresentacioneController;
 use App\Http\Controllers\ProductoController;
@@ -32,6 +33,7 @@ Route::resources([
     'producto' => ProductoController::class,
     'cliente' => ClienteController::class,
     'proveedor' => ProveedorController::class,
+    'compra' => CompraController::class,
 
 ]);
 

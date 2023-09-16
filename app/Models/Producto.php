@@ -35,7 +35,7 @@ class Producto extends Model
         return $this->belongsTo(Presentacione::class);
     }
 
-    protected $fillable = ['codigo', 'nombre', 'descripcion', 'fecha_vencimiento', 'marca_id', 'presentacione_id', 'img_path',];
+    protected $fillable = ['codigo', 'nombre', 'descripcion', 'fecha_vencimiento', 'marca_id', 'presentacione_id', 'img_path', 'stock'];
 
     public function handleUploadImage($image)
     {
