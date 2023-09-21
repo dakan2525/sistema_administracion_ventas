@@ -46,9 +46,8 @@
                     </div>
 
                     {{-- Razón social --}}
-                    <div class="col-md-12 mb-2" id="box-razon-social">
-                        <label id="label-natural" class="form-label" for="razon_social">Nombres y apellidos</label>
-                        <label id="label-juridica" class="form-label" for="razon_social">Nombre de la empresa</label>
+                    <div class="col-md-12 mb-2">
+                        <label id="label-natural" class="form-label" for="razon_social">Nombre</label>
 
                         <input type="text" name="razon_social" id="razon_social" class="form-control"
                             value="{{ old('razon_social') }}">
@@ -103,22 +102,4 @@
     @endsection
 
     @push('js')
-        <script>
-            $(document).ready(function() {
-                $('#tipo_persona').on('change', function() {
-                    let selectValue = $(this).val();
-
-                    if (selectValue == 'Natural') {
-                        $('#label-natural').show();
-                        $('#label-juridica').hide();
-                    } else {
-                        $('#label-natural').hide();
-                        $('#label-juridica').show();
-                    }
-
-                    $('#box-razon-social').show();
-
-                });
-            });
-        </script>
     @endpush

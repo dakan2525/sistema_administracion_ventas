@@ -40,7 +40,7 @@ class StoreProdcutoRequest extends FormRequest
             'fecha_vencimiento' => 'fecha vencimiento',
             'img_path' => 'imagen',
             'marca_id' => 'marca',
-            'presentacion_id' => 'presentacion',
+            'presentacion_id' => 'presentación',
 
         ];
     }

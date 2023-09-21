@@ -41,9 +41,11 @@
             <li class="breadcrumb-item active">Compras</li>
         </ol>
 
-        <div class="mb-4">
-            <a href="{{ route('compra.create') }}" class="btn btn-primary">Añadir nuevo registro</a>
-        </div>
+        @can('crear-compra')
+            <div class="mb-4">
+                <a href="{{ route('compra.create') }}" class="btn btn-primary">Añadir nuevo registro</a>
+            </div>
+        @endcan
 
         <div class="card mb-4">
             <div class="card-header">
@@ -51,15 +53,15 @@
                 Tabla de compras
             </div>
             <div class="card-body">
-                <table id="datatablesSimple" class="table table-striped">
+                <table id="datatablesSimple" class="table table-striped text-center">
                     <thead>
                         <tr>
-                            <th>Combrobante</th>
-                            <th>Proveedor</th>
-                            <th>Fecha y hora</th>
-                            <th>Total</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
+                            <th class="text-center">Combrobante</th>
+                            <th class="text-center">Proveedor</th>
+                            <th class="text-center">Fecha y hora</th>
+                            <th class="text-center">Total</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -92,13 +94,15 @@
                                 <td>
                                     <a class="btn btn-success" href="{{ route('compra.show', ['compra' => $compra]) }}">
                                         Ver</a>
-                                    @if ($compra->estado == 1)
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#confirmModal-{{ $compra->id }}">Eliminar</button>
-                                    @else
-                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                            data-bs-target="#confirmModal-{{ $compra->id }}">Restaurar</button>
-                                    @endif
+                                    @can('eliminar-compra')
+                                        @if ($compra->estado == 1)
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal-{{ $compra->id }}">Eliminar</button>
+                                        @else
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal-{{ $compra->id }}">Restaurar</button>
+                                        @endif
+                                    @endcan
                                 </td>
                             </tr>
                             <!-- Modal -->
@@ -117,7 +121,8 @@
                                             {{ $compra->estado == 1 ? '¿Seguro que desea eliminar esta compra?' : '¿Seguro que desea restaurar esta compra?' }}
                                         </div>
                                         <div class="modal-footer">
-                                            <form class="m-1" action="{{ route('compra.destroy', $compra->id) }}"
+                                            <form class="m-1"
+                                                action="{{ route('compra.destroy', ['compra' => $compra]) }}"
                                                 method="POST">
                                                 @method('DELETE')
                                                 @csrf

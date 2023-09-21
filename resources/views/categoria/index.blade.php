@@ -41,9 +41,11 @@
             <li class="breadcrumb-item active">Categorias</li>
         </ol>
 
-        <div class="mb-4">
-            <a href="{{ route('categoria.create') }}" class="btn btn-primary">Añadir nuevo registro</a>
-        </div>
+        @can('crear-categoria')
+            <div class="mb-4">
+                <a href="{{ route('categoria.create') }}" class="btn btn-primary">Añadir nuevo registro</a>
+            </div>
+        @endcan
 
         <div class="card mb-4">
             <div class="card-header">
@@ -51,13 +53,15 @@
                 Tabla de categorías
             </div>
             <div class="card-body">
-                <table id="datatablesSimple" class="table table-striped">
+                <table id="datatablesSimple" class="table table-striped text-center">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Descripción</th>
+                            <th class="text-center">Estado</th>
+                            @can('editar-categoria', 'eliminar-categoria')
+                                <th class="text-center">Acciones</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -74,15 +78,19 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary" href="{{ route('categoria.edit', $categoria) }}">
-                                        Editar</a>
-                                    @if ($categoria->caracteristica->estado == 1)
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#confirmModal-{{ $categoria->id }}">Eliminar</button>
-                                    @else
-                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                            data-bs-target="#confirmModal-{{ $categoria->id }}">Restaurar</button>
-                                    @endif
+                                    @can('editar-categoria')
+                                        <a class="btn btn-primary" href="{{ route('categoria.edit', $categoria) }}">
+                                            Editar</a>
+                                    @endcan
+                                    @can('eliminar-categoria')
+                                        @if ($categoria->caracteristica->estado == 1)
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal-{{ $categoria->id }}">Eliminar</button>
+                                        @else
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal-{{ $categoria->id }}">Restaurar</button>
+                                        @endif
+                                    @endcan
                                 </td>
                             </tr>
 

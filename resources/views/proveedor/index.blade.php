@@ -41,9 +41,11 @@
             <li class="breadcrumb-item active">Proveedores</li>
         </ol>
 
-        <div class="mb-4">
-            <a href="{{ route('proveedor.create') }}" class="btn btn-primary">Añadir nuevo registro</a>
-        </div>
+        @can('crear-proveedor')
+            <div class="mb-4">
+                <a href="{{ route('proveedor.create') }}" class="btn btn-primary">Añadir nuevo registro</a>
+            </div>
+        @endcan
 
         <div class="card mb-4">
             <div class="card-header">
@@ -51,16 +53,18 @@
                 Tabla Proveedores
             </div>
             <div class="card-body">
-                <table id="datatablesSimple" class="table table-striped">
+                <table id="datatablesSimple" class="table table-striped text-center">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Direccion</th>
-                            <th>Tipo de documento</th>
-                            <th>Numero de documento</th>
-                            <th>Tipo de proveedor</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Direccion</th>
+                            <th class="text-center">Tipo de documento</th>
+                            <th class="text-center">Numero de documento</th>
+                            <th class="text-center">Tipo de proveedor</th>
+                            <th class="text-center">Estado</th>
+                            @can('editar-proveedor', 'eliminar-proveedor')
+                                <th class="text-center">Acciones</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
@@ -89,15 +93,19 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <a class="btn btn-primary" href="{{ route('proveedor.edit', $proveedor) }}">
-                                        Editar</a>
-                                    @if ($proveedor->persona->estado == 1)
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                            data-bs-target="#confirmModal-{{ $proveedor->id }}">Eliminar</button>
-                                    @else
-                                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                                            data-bs-target="#confirmModal-{{ $proveedor->id }}">Restaurar</button>
-                                    @endif
+                                    @can('editar-proveedor')
+                                        <a class="btn btn-primary" href="{{ route('proveedor.edit', $proveedor) }}">
+                                            Editar</a>
+                                    @endcan
+                                    @can('eliminar-proveedor')
+                                        @if ($proveedor->persona->estado == 1)
+                                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal-{{ $proveedor->id }}">Eliminar</button>
+                                        @else
+                                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal-{{ $proveedor->id }}">Restaurar</button>
+                                        @endif
+                                    @endcan
                                 </td>
                             </tr>
                             <!-- Modal -->

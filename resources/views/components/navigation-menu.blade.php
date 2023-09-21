@@ -60,49 +60,110 @@
                     </nav>
                 </div> --}}
                 <div class="sb-sidenav-menu-heading">Modulos</div>
-                <a class="nav-link" href="{{ route('categoria.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-tag"></i></div>
-                    Categorias
-                </a>
-                <a class="nav-link" href="{{ route('marca.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-shop"></i></div>
-                    Marcas
-                </a>
-                <a class="nav-link" href="{{ route('presentacion.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-star"></i></div>
-                    Presentaciones
-                </a>
-                <a class="nav-link" href="{{ route('producto.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-boxes-packing"></i></div>
-                    Productos
-                </a>
-                <a class="nav-link" href="{{ route('cliente.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
-                    Clientes
-                </a>
-                <a class="nav-link" href="{{ route('proveedor.index') }}">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
-                    Proveedores
-                </a>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
-                    aria-expanded="false" aria-controls="collapseLayouts">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-shopping"></i></div>
-                    Compras
-                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
-                <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
-                    data-bs-parent="#sidenavAccordion">
-                    <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('compra.index') }}">Ver</a>
-                        <a class="nav-link" href="{{ route('compra.create') }}">Crear</a>
-                    </nav>
-                </div>
+
+                @can('ver-venta')
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseVenta"
+                        aria-expanded="false" aria-controls="collapseVenta">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-cart-shopping"></i></div>
+                        Ventas
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseVenta" aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="{{ route('venta.index') }}">Ver</a>
+                            @can('crear-venta')
+                                <a class="nav-link" href="{{ route('venta.create') }}">Crear</a>
+                            @endcan
+                        </nav>
+                    </div>
+                @endcan
+
+                @can('ver-compra')
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseCompra"
+                        aria-expanded="false" aria-controls="collapseCompra">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-file-invoice-dollar"></i></div>
+                        Compras
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseCompra" aria-labelledby="headingOne"
+                        data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="{{ route('compra.index') }}">Ver</a>
+                            @can('crear-compra')
+                                <a class="nav-link" href="{{ route('compra.create') }}">Crear</a>
+                            @endcan
+                        </nav>
+                    </div>
+                @endcan
+
+                @can('ver-producto')
+                    <a class="nav-link" href="{{ route('producto.index') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-boxes-packing"></i></div>
+                        Productos
+                    </a>
+                @endcan
+
+                @can('ver-categoria')
+                    <a class="nav-link" href="{{ route('categoria.index') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-tag"></i></div>
+                        Categorias
+                    </a>
+                @endcan
+
+                @can('ver-marca')
+                    <a class="nav-link" href="{{ route('marca.index') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-shop"></i></div>
+                        Marcas
+                    </a>
+                @endcan
+
+                @can('ver-presentacione')
+                    <a class="nav-link" href="{{ route('presentacion.index') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-star"></i></div>
+                        Presentaciones
+                    </a>
+                @endcan
+
+                @can('ver-cliente')
+                    <a class="nav-link" href="{{ route('cliente.index') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-user-tag"></i></div>
+                        Clientes
+                    </a>
+                @endcan
+
+                @can('ver-proveedor')
+                    <a class="nav-link" href="{{ route('proveedor.index') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
+                        Proveedores
+                    </a>
+                @endcan
+
+                @can('ver-role', 'ver-user')
+                    <div class="sb-sidenav-menu-heading">OTROS</div>
+                @endcan
+
+                @can('ver-user')
+                    <a class="nav-link" href="{{ route('user.index') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-user"></i></div>
+                        Usuarios
+                    </a>
+                @endcan
+
+                @can('ver-role')
+                    <a class="nav-link" href="{{ route('role.index') }}">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-person-circle-plus"></i></div>
+                        Roles
+                    </a>
+                @endcan
+
+
 
             </div>
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Bienvenido:</div>
-            Usuario???
+            {{ auth()->user()->name }}
         </div>
     </nav>
 </div>

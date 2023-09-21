@@ -15,12 +15,20 @@ use Illuminate\Support\Facades\Log;
 
 class CompraController extends Controller
 {
+
+    function __construct()
+    {
+        $this->middleware('permission:ver-compra|crear-compra|mostrar-compra|eliminar-compra', ['only' => ['index']]);
+        $this->middleware('permission:crear-compra', ['only' => ['create', 'store']]);
+        $this->middleware('permission:mostrar-compra', ['only' => ['show']]);
+        $this->middleware('permission:eliminar-compra', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $compras = Compra::with('comprobante', 'productos', 'proveedore.persona')->latest()
+        $compras = Compra::with('comprobante', 'productos', 'proveedore.persona')->where('estado', 1)->latest()
             ->get();
         return view('compra.index', compact('compras'));
     }
@@ -124,13 +132,31 @@ class CompraController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Compra $compra)
     {
+        $arrayId = [];
+        $arrayCantidad = [];
+        $i = 0;
 
-        $compra = Compra::find($id);
+        foreach ($compra->productos as $item) {
+            $arrayCantidad[$i] = $item->pivot->cantidad;
+            $arrayId[$i] = $item->pivot->producto_id;
+            $i++;
+        }
+        for ($i = 0; $i < count($arrayId); $i++) {
+            $producto = Producto::find($arrayId[$i]);
+            $stockActual = $producto->stock;
+            $cantidadEliminada = intval($arrayCantidad[$i]);
+
+            DB::table('productos')
+                ->where('id', $producto->id)
+                ->update([
+                    'stock' => $stockActual - $cantidadEliminada
+                ]);
+        }
         Compra::where('id', $compra->id)->update([
-            'estado' => $compra->estado == 1 ? 0 : 1
+            'estado' => 0
         ]);
-        return redirect()->route('compra.index')->with('success', $compra->estado == 1 ? 'Compra eliminada correctamente' : 'Compra restaurada correctamente');
+        return redirect()->route('compra.index')->with('success', 'Compra eliminada correctamente');
     }
 }

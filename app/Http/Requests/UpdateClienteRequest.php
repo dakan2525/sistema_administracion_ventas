@@ -29,4 +29,14 @@ class UpdateClienteRequest extends FormRequest
             'numero_documento' => 'required|max:20|unique:personas,numero_documento,' . $cliente->persona->id
         ];
     }
+    public function attributes()
+    {
+        return [
+            'razon_social' => 'nombre',
+            'direccion' => 'dirección',
+            'tipo_persona' => 'tipo de cliente',
+            'documento_id' => 'tipo de documento',
+            'numero_documento' => 'número de documento'
+        ];
+    }
 }

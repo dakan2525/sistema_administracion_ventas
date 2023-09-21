@@ -30,4 +30,6 @@ class Venta extends Model
     {
         return $this->belongsToMany(Producto::class)->withTimestamps()->withPivot('cantidad', 'precio_venta', 'descuento');
     }
+
+    protected $guarded = ['id'];
 }

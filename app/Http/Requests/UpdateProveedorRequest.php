@@ -29,4 +29,15 @@ class UpdateProveedorRequest extends FormRequest
             'numero_documento' => 'required|max:20|unique:personas,numero_documento,' . $proveedor->persona->id
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'tipo_persona' => 'tipo de proveedor',
+            'razon_social' => 'nombre',
+            'direccion' => 'dirección',
+            'documento_id' => 'tipo de documento',
+            'numero_documento' => 'número de documento'
+        ];
+    }
 }

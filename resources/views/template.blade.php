@@ -15,31 +15,38 @@
     @stack('css')
 </head>
 
-<body class="sb-nav-fixed">
+@auth
 
-    <x-navigation-header />
+    <body class="sb-nav-fixed">
 
-    <div id="layoutSidenav">
+        <x-navigation-header />
 
-        <x-navigation-menu />
+        <div id="layoutSidenav">
 
-        <div id="layoutSidenav_content">
+            <x-navigation-menu />
 
-            <main>
-                @yield('content')
-            </main>
+            <div id="layoutSidenav_content">
 
-            <x-footer />
+                <main>
+                    @yield('content')
+                </main>
 
+                <x-footer />
+
+            </div>
         </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
-    </script>
-    <script src="{{ asset('js/scripts.js') }}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous">
+        </script>
+        <script src="{{ asset('js/scripts.js') }}"></script>
 
-    @stack('js')
+        @stack('js')
 
-</body>
+    </body>
+@endauth
+
+@guest
+    @include('pages.401');
+@endguest
 
 </html>

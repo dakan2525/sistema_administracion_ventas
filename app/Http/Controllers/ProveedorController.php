@@ -8,11 +8,18 @@ use App\Models\Documento;
 use Illuminate\Support\Facades\DB;
 use App\Models\Persona;
 use Exception;
-use App\Http\Requests\StorePersonaRequest;
+use App\Http\Requests\StoreProveedorRequest;
 use App\Http\Requests\UpdateProveedorRequest;
 
 class ProveedorController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware('permission:ver-proveedor|crear-proveedor|editar-proveedor|eliminar-proveedor', ['only' => ['index']]);
+        $this->middleware('permission:crear-proveedor', ['only' => ['create', 'store']]);
+        $this->middleware('permission:editar-proveedor', ['only' => ['edit', 'update']]);
+        $this->middleware('permission:eliminar-proveedor', ['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      */
@@ -34,7 +41,7 @@ class ProveedorController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StorePersonaRequest $request)
+    public function store(StoreProveedorRequest $request)
     {
         try {
             DB::beginTransaction();

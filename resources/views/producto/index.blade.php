@@ -38,25 +38,27 @@
             <li class="breadcrumb-item active"><a href="{{ route('panel') }}">Inicio</a></li>
             <li class="breadcrumb-item active">Productos</li>
         </ol>
-        <div class="mb-4">
-            <a href="{{ route('producto.create') }}" class="btn btn-primary">Añadir nuevo registro</a>
-        </div>
+        @can('crear-producto')
+            <div class="mb-4">
+                <a href="{{ route('producto.create') }}" class="btn btn-primary">Añadir nuevo registro</a>
+            </div>
+        @endcan
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
                 Tabla de productos
             </div>
             <div class="card-body">
-                <table id="datatablesSimple" class="table table-striped">
+                <table id="datatablesSimple" class="table table-striped text-center">
                     <thead>
                         <tr>
-                            <th>Código</th>
-                            <th>Nombre</th>
-                            <th>Presentacion</th>
-                            <th>Categorías</th>
-                            <th>Marca</th>
-                            <th>Estado</th>
-                            <th>Acciones</th>
+                            <th class="text-center">Código</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Presentacion</th>
+                            <th class="text-center">Categorías</th>
+                            <th class="text-center">Marca</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -90,17 +92,21 @@
                                 </td>
 
                                 <td>
-                                    <a class="btn btn-primary fw-semibold"
-                                        href="{{ route('producto.edit', ['producto' => $producto]) }}">Editar</a>
+                                    @can('editar-producto')
+                                        <a class="btn btn-primary fw-semibold"
+                                            href="{{ route('producto.edit', ['producto' => $producto]) }}">Editar</a>
+                                    @endcan
                                     <a href="#" class="btn btn-success fw-semibold" data-bs-toggle="modal"
                                         data-bs-target="#verModal-{{ $producto->id }}">Ver</a>
-                                    @if ($producto->estado == 1)
-                                        <button type="button" class="btn btn-danger fw-semibold" data-bs-toggle="modal"
-                                            data-bs-target="#confirmModal-{{ $producto->id }}">Eliminar</button>
-                                    @else
-                                        <button type="button" class="btn btn-success fw-semibold" data-bs-toggle="modal"
-                                            data-bs-target="#confirmModal-{{ $producto->id }}">Restaurar</button>
-                                    @endif
+                                    @can('eliminar-producto')
+                                        @if ($producto->estado == 1)
+                                            <button type="button" class="btn btn-danger fw-semibold" data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal-{{ $producto->id }}">Eliminar</button>
+                                        @else
+                                            <button type="button" class="btn btn-success fw-semibold" data-bs-toggle="modal"
+                                                data-bs-target="#confirmModal-{{ $producto->id }}">Restaurar</button>
+                                        @endif
+                                    @endcan
                                 </td>
                             </tr>
                             <!-- Modal -->

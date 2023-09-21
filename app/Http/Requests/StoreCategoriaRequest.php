@@ -26,4 +26,11 @@ class StoreCategoriaRequest extends FormRequest
             'descripcion' => 'nullable|max:255'
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'descripcion' => 'descripción',
+        ];
+    }
 }
