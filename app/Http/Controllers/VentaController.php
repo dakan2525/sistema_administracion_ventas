@@ -70,6 +70,7 @@ class VentaController extends Controller
         try {
             DB::beginTransaction();
 
+
             //llenar mi tabla venta
             $venta = Venta::create($request->validated());
 

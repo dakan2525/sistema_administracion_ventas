@@ -57,9 +57,9 @@
                     <thead>
                         <tr>
                             <th class="text-center">Nombre</th>
-                            <th class="text-center">Direccion</th>
+                            <th class="text-center">Dirección</th>
                             <th class="text-center">Tipo de documento</th>
-                            <th class="text-center">Numero de documento</th>
+                            <th class="text-center">Número de documento</th>
                             <th class="text-center">Tipo de proveedor</th>
                             <th class="text-center">Estado</th>
                             @can('editar-proveedor', 'eliminar-proveedor')

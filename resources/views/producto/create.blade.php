@@ -136,3 +136,60 @@
 @push('js')
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.14.0-beta3/dist/js/bootstrap-select.min.js"></script>
 @endpush
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="card shadow-lg border-0 rounded-lg mt-5">
+    <div class="card-header">
+        <h3 class="text-center font-weight-light my-4">Acceso al sistema</h3>
+    </div>
+    <div class="card-body">
+        @if ($errors->any())
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-danger  alert-dismissible fade show" role="alert">
+                    {{ $error }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @endforeach
+        @endif
+        <form action="/login" method="POST">
+            @csrf
+            <div class="form-floating mb-3">
+                <input class="form-control" id="inputEmail" name="email" type="email"
+                    placeholder="name@example.com" value="{{ old('email') }}" />
+                <label for="inputEmail">Correo eléctronico</label>
+            </div>
+            <div class="form-floating mb-3">
+                <input class="form-control" id="inputPassword" name="password" type="password"
+                    placeholder="Password" value="{{ old('password') }}" />
+                <label for="inputPassword">Contraseña</label>
+            </div>
+            {{-- <div class="form-check mb-3">
+                <input class="form-check-input" id="inputRememberPassword" type="checkbox"
+                    value="" />
+                <label class="form-check-label" for="inputRememberPassword">Remember
+                    Password</label>
+            </div> --}}
+            <div class="text-center mt-4 mb-0">
+                {{-- <a class="small" href="password.html">Forgot Password?</a> --}}
+                <button type="submit" class="btn btn-primary">Iniciar sesion</button>
+            </div>
+        </form>
+    </div>
+    {{-- <div class="card-footer text-center py-3">
+        <div class="small"><a href="register.html">¿Necesita una cuenta? ¡Registrarse!</a>
+        </div>
+    </div> --}}
+</div>
